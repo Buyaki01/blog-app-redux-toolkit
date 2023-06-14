@@ -16,7 +16,7 @@ const Header = () => {
           <li><Link to="user">Users</Link></li>
         </ul>
         <button
-          onClick={() => dispatch(increaseCount)}
+          onClick={() => dispatch(increaseCount())}
         >
           {count}
         </button>
