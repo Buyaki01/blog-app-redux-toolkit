@@ -67,7 +67,7 @@ const EditPostForm = () => {
       setContent('')
       setUserId('')
       navigate('/')
-    } catch (error) {
+    } catch (err) {
       console.error('Failed to delete the post', err)
     } finally {
       setRequestStatus('idle')
