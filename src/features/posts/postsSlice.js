@@ -20,7 +20,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
   try {
-    const response = await axios.post(POSTS_URL, initialPost)
+    const response = await axios.post(POSTS_URL, initialPost) //posting data to the API
     return response.data
   } catch (err) {
     return err.message
@@ -57,7 +57,6 @@ const postsSlice = createSlice({
     reactionAdded(state, action) {
       const { postId, reaction } = action.payload
       const existingPost = state.posts.find(post => post.id === postId)
-      console.log(existingPost)
       if (existingPost) {
         existingPost.reactions[reaction]++
       }
@@ -101,7 +100,6 @@ const postsSlice = createSlice({
           rocket: 0,
           coffee: 0
         }
-        console.log(action.payload)
         state.posts.push(action.payload)
       })
   }
