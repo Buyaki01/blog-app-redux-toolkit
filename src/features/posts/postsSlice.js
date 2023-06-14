@@ -20,7 +20,19 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
   try {
+    //initialPost represents the data that you want to post to the API, and it is passed as an argument when dispatching the addNewPost action
     const response = await axios.post(POSTS_URL, initialPost) //posting data to the API
+    return response.data
+  } catch (err) {
+    return err.message
+  }
+})
+
+export const updatePost = createAsyncThunk('posts/updatePost', async (initialPost) => {
+  //initialPost: dispatch(updatePost({ id: post.id, title, body: content, userId, reactions: post.reactions })).unwrap()
+  const { id } = initialPost
+  try {
+    const response = await axios.put(`${POSTS_URL}/${id}`, initialPost)
     return response.data
   } catch (err) {
     return err.message
