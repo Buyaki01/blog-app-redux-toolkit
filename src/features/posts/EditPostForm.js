@@ -108,6 +108,13 @@ const EditPostForm = () => {
         >
           Save Post
         </button>
+
+        <button
+          type="button"
+          onClick={onDeletePostClicked}
+        >
+          Delete Post
+        </button>
       </form>
     </section>
   )
