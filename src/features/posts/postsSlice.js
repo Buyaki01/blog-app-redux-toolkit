@@ -39,10 +39,19 @@ export const {
   useGetPostsQuery,
 } = extendedApiSlice
 
+//Returns the query result object
+export const selectPostsResult = extendedApiSlice.endpoints.getPosts.select()
+
+//Creates memoized selector
+const selectPostsData = createSelector(
+  selectPostsResult,
+  postsResult = postsResult.data //Normalized state object with ids and entities
+)
+
 //getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
   selectAll: selectAllPosts,
   selectById: selectPostById,
   selectIds: selectPostIds
   // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors(state => state.posts)
+} = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState) //nullish operator: if selectPostsData(state) is empty return initialState
