@@ -1,60 +1,12 @@
-import { createSlice, createAsyncThunk, createSelector, createEntityAdapter } from "@reduxjs/toolkit"
+import { createSelector, createEntityAdapter } from "@reduxjs/toolkit"
 import { sub } from "date-fns"
-import axios from "axios"
-
-const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts'
+import { apiSlice } from "../api/apiSlice"
 
 const postsAdapter = createEntityAdapter({
   sortComparer: (a,b) => b.date.localeCompare(a.date)
 })
 
-const initialState = postsAdapter.getInitialState({
-  status: 'idle', // 'idle' || 'loading' || 'succeeded' || 'failed'
-  error: null,
-  count: 0
-})
-
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  try {
-    const response = await axios.get(POSTS_URL)
-    return [...response.data]
-  } catch (err) {
-    return err.message
-  }
-})
-
-export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
-  try {
-    //initialPost represents the data that you want to post to the API, and it is passed as an argument when dispatching the addNewPost action
-    const response = await axios.post(POSTS_URL, initialPost) //posting data to the API
-    return response.data
-  } catch (err) {
-    return err.message
-  }
-})
-
-export const updatePost = createAsyncThunk('posts/updatePost', async (initialPost) => {
-  //initialPost: dispatch(updatePost({ id: post.id, title, body: content, userId, reactions: post.reactions })).unwrap()
-  const { id } = initialPost
-  try {
-    const response = await axios.put(`${POSTS_URL}/${id}`, initialPost)
-    return response.data
-  } catch (err) {
-    // return err.message
-    return initialPost //Only for testing redux
-  }
-})
-
-export const deletePost = createAsyncThunk('posts/deletePost', async (initialPost) => {
-  const { id } = initialPost
-  try {
-    const response = await axios.delete(`${POSTS_URL}/${id}`)
-    if (response?.status === 200) return initialPost
-    return `${response?.status}: ${response?.statusText}`
-  } catch (err) {
-    return err.message
-  }
-})
+const initialState = postsAdapter.getInitialState()
 
 const postsSlice = createSlice({
   name: 'posts',
