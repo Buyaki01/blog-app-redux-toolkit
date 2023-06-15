@@ -31,12 +31,37 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: 'Post', id: "LIST" },
         ...result.ids.map(id => ({ type: 'Post', id })) //For each post ID, a cache tag object is created with the type 'Post' and the respective ID
       ]
+    }),
+    getPostsByUserId: builder.query({
+      query: id => `/posts/?userId=${id}`,
+      transformResponse: responseData => {
+        let min = 1
+        const loadedPosts = responseData.map(post => {
+          if (!post?.date) post.date = sub(new Date(), { minutes: min++ }).toISOString()
+          if (!post?.reactions) post.reactions = {
+            thumbsUp: 0,
+            wow: 0,
+            heart: 0,
+            rocket: 0,
+            coffee: 0
+          }
+          return post
+        })
+        return postsAdapter.setAll(initialState, loadedPosts)
+      },
+      providesTags: (result, error, arg) => {
+        console.log(result)
+        return [
+          ...result.ids.map(id => ({ type: 'Post', id }))
+        ]
+      }
     })
   })
 })
 
 export const {
   useGetPostsQuery,
+  useGetPostsByUserIdQuery,
 } = extendedApiSlice
 
 //Returns the query result object
