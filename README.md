@@ -1,6 +1,6 @@
 # redux-toolkit
 
-> This repository uses the latest technology of redux, redux-toolkit.
+> This is a blog app that utilizes the Redux toolkit.
 
 ## Built With
 
@@ -31,7 +31,7 @@ To get a local copy up and running follow these simple example steps.
 ```bash 
 git clone git@github.com:Buyaki01/redux-toolkit.git
 
-cd handbags-react
+cd redux-toolkit
 ```
 
 - Install dependencies
