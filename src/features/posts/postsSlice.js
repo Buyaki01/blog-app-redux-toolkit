@@ -84,6 +84,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     updatePost: builder.mutation({
       query: initialPost => ({
+        //initialPost.id because it is not a new post, it was previously there
         url: `/posts/${initialPost.id}`,
         method: 'PUT',
         body: {
@@ -96,7 +97,17 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [
         { type: 'Post', id: arg.id }
       ]
-    })
+    }),
+    deletePost: builder.mutation({
+      query: ({ id }) => ({
+        url: `/posts/${id}`,
+        method: 'DELETE',
+        body: { id }
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Post', id: arg.id }
+      ]
+    }),
   })
 })
 
@@ -105,6 +116,7 @@ export const {
   useGetPostsByUserIdQuery,
   useAddNewPostMutation,
   useUpdatePostMutation,
+  useDeletePostMutation
 } = extendedApiSlice
 
 //Returns the query result object
