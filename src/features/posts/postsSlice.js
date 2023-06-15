@@ -147,7 +147,7 @@ export const selectPostsResult = extendedApiSlice.endpoints.getPosts.select()
 //Creates memoized selector
 const selectPostsData = createSelector(
   selectPostsResult,
-  postsResult = postsResult.data //Normalized state object with ids and entities
+  postsResult => postsResult.data //Normalized state object with ids and entities
 )
 
 //getSelectors creates these selectors and we rename them with aliases using destructuring
