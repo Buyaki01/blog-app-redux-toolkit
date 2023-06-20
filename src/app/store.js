@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { apiSlice } from "../features/api/apiSlice"
 import usersReducer from '../features/users/usersSlice'
+import authReducer from '../features/auth/authSlice'
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
-    users: usersReducer
+    users: usersReducer,
+    auth: authReducer
   },
   //Middleware functions sit between the dispatching of an action and the updating of the store
   //getDefaultMiddleware is a function provided by Redux Toolkit that returns an array of default middleware.
